@@ -6,36 +6,36 @@ Every level runs on a single Node.js server with zero external dependencies beyo
 
 ## Levels
 
-| # | Name | Difficulty | Technique |
-|---|------|------------|-----------|
-| 1 | Hello, Reflected XSS | Easy | Basic reflected XSS |
-| 2 | Stored XSS Guestbook | Easy | Persistent/stored XSS |
-| 3 | Script Tag Blocked | Medium | Alternative tags & event handlers |
-| 4 | Attribute Injection | Medium | Breaking out of HTML attributes |
-| 5 | JavaScript Context | Medium | Escaping JS string context |
-| 6 | Event Handler Blocklist | Hard | Bypassing event handler filters |
-| 7 | Case & Keyword Filter | Hard | Case tricks & bracket notation |
-| 8 | DOM-Based XSS | Hard | Client-side DOM manipulation |
-| 9 | href Injection with Filters | Expert | `javascript:` URI with entity encoding |
-| 10 | CSP Bypass | Expert | JSONP callback abuse |
-| 11 | Double Encoding Bypass | Expert | Double URL encoding |
-| 12 | Client-Side Template Injection | Expert | Sandbox escape via constructors |
-| 13 | postMessage XSS | Expert | Cross-origin message handling |
-| 14 | SVG Upload XSS | Expert | Malicious SVG with embedded scripts |
-| 15 | Mutation XSS | Expert | DOM mutation via innerHTML |
-| 16 | Recursive Keyword Filter | Expert | Nested tag reconstruction |
-| 17 | The Polyglot | Expert | Multi-context polyglot payload |
-| 18 | DOM Clobbering | Expert | Named element property override |
-| 19 | Prototype Pollution to XSS | Expert | `__proto__` poisoning |
-| 20 | Base Tag Injection | Expert | Hijacking relative script paths |
-| 21 | Dangling Markup Injection | Expert | Data exfiltration without JavaScript |
-| 22 | JSON Injection in Script Block | Expert | Breaking out of inline JSON |
-| 23 | URL Scheme Bypass | Expert | HTML entity encoding mismatch |
+| # | Name | Difficulty |
+|---|------|------------|
+| 1 | Hello, Reflected XSS | Easy |
+| 2 | Stored XSS Guestbook | Easy |
+| 3 | Script Tag Blocked | Medium |
+| 4 | Attribute Injection | Medium |
+| 5 | JavaScript Context | Medium |
+| 6 | Event Handler Blocklist | Hard |
+| 7 | Case & Keyword Filter | Hard |
+| 8 | DOM-Based XSS | Hard |
+| 9 | href Injection with Filters | Expert |
+| 10 | CSP Bypass | Expert |
+| 11 | Double Encoding Bypass | Expert |
+| 12 | Client-Side Template Injection | Expert |
+| 13 | postMessage XSS | Expert |
+| 14 | SVG Upload XSS | Expert |
+| 15 | Mutation XSS | Expert |
+| 16 | Recursive Keyword Filter | Expert |
+| 17 | The Polyglot | Expert |
+| 18 | DOM Clobbering | Expert |
+| 19 | Prototype Pollution to XSS | Expert |
+| 20 | Base Tag Injection | Expert |
+| 21 | Dangling Markup Injection | Expert |
+| 22 | JSON Injection in Script Block | Expert |
+| 23 | URL Scheme Bypass | Expert |
 
 ## Getting Started
 
 ```bash
-git clone https://github.com/ArtSecTest/xss-lab.git
+git clone https://github.com/ArtSecTest/artsec-xss-labs.git
 cd xss-lab
 npm install
 npm start
