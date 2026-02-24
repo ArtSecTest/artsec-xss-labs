@@ -2,7 +2,7 @@
 
 An interactive, self-hosted XSS training lab with 23 progressively harder challenges. Built for hackers, pentesters, and developers who want to understand cross-site scripting from the ground up.
 
-Every level runs on a single Node.js server with zero external dependencies beyond Express. No Docker, no databases, no build step.
+Every level runs on a single Node.js server with zero external dependencies beyond Express. No databases, no build step. (If you want to run it in a Docker Container, Stealthcopter added a docker file!)
 
 ## Levels
 
