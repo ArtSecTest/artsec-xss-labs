@@ -36,7 +36,7 @@ Every level runs on a single Node.js server with zero external dependencies beyo
 
 ```bash
 git clone https://github.com/ArtSecTest/artsec-xss-labs.git
-cd xss-lab
+cd artsec-xss-labs
 npm install
 npm start
 ```
