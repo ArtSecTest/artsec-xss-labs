@@ -1,0 +1,15 @@
+{
+  "name": "xss-lab",
+  "version": "1.0.0",
+  "description": "An interactive XSS training lab with 23 progressively harder challenges — from basic reflected XSS to DOM clobbering, prototype pollution, and dangling markup injection.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["xss", "security", "training", "ctf", "web-security", "pentest"],
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
