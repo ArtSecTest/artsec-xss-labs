@@ -49,7 +49,7 @@ Open http://localhost:3000 in your browser.
 - **Hints** for every level (base64-encoded so you won't accidentally spoil yourself in page source)
 - **Detailed writeups** that unlock after solving each level, explaining why the attack worked, the key lesson, and real-world applications
 - **Cheat sheet** with all techniques, injection contexts, and defenses at a glance
-- **Solutions saved locally** to `solutions.json` (gitignored) so your progress persists across restarts
+- **Solutions saved locally** to `solutions.json` (gitignored) so your progress in the CHEATSHEET persists across restarts
 - **Reset button** on the dashboard to start fresh
 
 ## How It Works
