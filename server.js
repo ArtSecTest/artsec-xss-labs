@@ -360,6 +360,14 @@ app.get('/', (req, res) => {
     .diff-medium .level { color: #d29922; }
     .diff-hard .level { color: #f85149; }
     .diff-expert .level { color: #bc4dff; }
+    .card { position: relative; }
+    .card.solved { border-color: #3fb950; box-shadow: 0 0 12px rgba(63, 185, 80, 0.15); }
+    .card.solved::after { content: ''; position: absolute; top: 12px; right: 12px; width: 24px; height: 24px; background: #3fb950; border-radius: 50%; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 16px; background-position: center; background-repeat: no-repeat; }
+    .card.solved a { background: rgba(63, 185, 80, 0.15); border-color: #3fb950; color: #3fb950; }
+    .progress-bar { margin-top: 1rem; }
+    .progress-bar .track { width: 220px; height: 6px; background: #21262d; border-radius: 3px; margin: 0 auto; overflow: hidden; }
+    .progress-bar .fill { height: 100%; background: linear-gradient(90deg, #3fb950, #2ea043); border-radius: 3px; transition: width 0.4s ease; width: 0%; }
+    .progress-bar .label { font-size: 0.85rem; color: #8b949e; margin-bottom: 0.4rem; }
     .instructions { max-width: 1200px; margin: 0 auto; padding: 0 2rem 2rem; }
     .instructions details { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1.25rem; }
     .instructions summary { cursor: pointer; color: #58a6ff; font-weight: 600; }
@@ -375,6 +383,10 @@ app.get('/', (req, res) => {
     <div style="margin-top:1rem;display:flex;gap:0.75rem;justify-content:center;">
       <a href="/cheatsheet" style="padding:0.5rem 1.2rem;background:rgba(255,255,255,0.1);border:1px solid #30363d;border-radius:8px;color:#c084fc;text-decoration:none;font-size:0.85rem;font-weight:500;">View Cheat Sheet &amp; Writeups</a>
       <button onclick="if(confirm('Reset all progress? This clears your solved levels and payloads.')){fetch('/api/reset',{method:'POST'}).then(()=>location.reload())}" style="padding:0.5rem 1.2rem;background:rgba(255,255,255,0.05);border:1px solid #da3633;border-radius:8px;color:#f85149;font-size:0.85rem;font-weight:500;cursor:pointer;">Reset Progress</button>
+    </div>
+    <div class="progress-bar">
+      <div class="label" id="progress-label">0 / 23 Completed</div>
+      <div class="track"><div class="fill" id="progress-fill"></div></div>
     </div>
   </div>
 
@@ -393,7 +405,7 @@ app.get('/', (req, res) => {
   </div>
 
   <div class="grid">
-    <div class="card diff-easy">
+    <div class="card diff-easy" data-level="1">
       <div class="level">Level 1 &mdash; Easy</div>
       <h2>Hello, Reflected XSS</h2>
       <p>No filters, no encoding. Your input is reflected directly into the page. The classic starting point.</p>
@@ -401,7 +413,7 @@ app.get('/', (req, res) => {
       <a href="/level/1">Start Challenge</a>
     </div>
 
-    <div class="card diff-easy">
+    <div class="card diff-easy" data-level="2">
       <div class="level">Level 2 &mdash; Easy</div>
       <h2>Stored XSS Guestbook</h2>
       <p>Your input is stored and rendered for all visitors. Classic persistent XSS.</p>
@@ -409,7 +421,7 @@ app.get('/', (req, res) => {
       <a href="/level/2">Start Challenge</a>
     </div>
 
-    <div class="card diff-medium">
+    <div class="card diff-medium" data-level="3">
       <div class="level">Level 3 &mdash; Medium</div>
       <h2>Script Tag Blocked</h2>
       <p>The server strips &lt;script&gt; tags. Find another way to execute JavaScript.</p>
@@ -417,7 +429,7 @@ app.get('/', (req, res) => {
       <a href="/level/3">Start Challenge</a>
     </div>
 
-    <div class="card diff-medium">
+    <div class="card diff-medium" data-level="4">
       <div class="level">Level 4 &mdash; Medium</div>
       <h2>Attribute Injection</h2>
       <p>Your input lands inside an HTML attribute. Break out and execute code.</p>
@@ -425,7 +437,7 @@ app.get('/', (req, res) => {
       <a href="/level/4">Start Challenge</a>
     </div>
 
-    <div class="card diff-medium">
+    <div class="card diff-medium" data-level="5">
       <div class="level">Level 5 &mdash; Medium</div>
       <h2>JavaScript Context</h2>
       <p>Your input is placed inside a JavaScript string variable. Escape and inject.</p>
@@ -433,7 +445,7 @@ app.get('/', (req, res) => {
       <a href="/level/5">Start Challenge</a>
     </div>
 
-    <div class="card diff-hard">
+    <div class="card diff-hard" data-level="6">
       <div class="level">Level 6 &mdash; Hard</div>
       <h2>Event Handler Blocklist</h2>
       <p>Common event handlers (onerror, onload, onclick, etc.) are blocked. Find an obscure one.</p>
@@ -441,7 +453,7 @@ app.get('/', (req, res) => {
       <a href="/level/6">Start Challenge</a>
     </div>
 
-    <div class="card diff-hard">
+    <div class="card diff-hard" data-level="7">
       <div class="level">Level 7 &mdash; Hard</div>
       <h2>Case & Keyword Filter</h2>
       <p>Aggressive filter blocks script, alert, onerror (case-insensitive) and strips them. Use encoding or alternative functions.</p>
@@ -449,7 +461,7 @@ app.get('/', (req, res) => {
       <a href="/level/7">Start Challenge</a>
     </div>
 
-    <div class="card diff-hard">
+    <div class="card diff-hard" data-level="8">
       <div class="level">Level 8 &mdash; Hard</div>
       <h2>DOM-Based XSS</h2>
       <p>No server reflection. The vulnerability is entirely in client-side JavaScript reading from the URL.</p>
@@ -457,7 +469,7 @@ app.get('/', (req, res) => {
       <a href="/level/8">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="9">
       <div class="level">Level 9 &mdash; Expert</div>
       <h2>href Injection with Filters</h2>
       <p>Your input goes into an anchor href. The filter blocks &lt;script&gt;, event handlers, and the word "javascript". Find a way.</p>
@@ -465,7 +477,7 @@ app.get('/', (req, res) => {
       <a href="/level/9">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="10">
       <div class="level">Level 10 &mdash; Expert</div>
       <h2>CSP Bypass</h2>
       <p>A Content-Security-Policy is in place. Find a way to execute JavaScript despite the policy.</p>
@@ -473,7 +485,7 @@ app.get('/', (req, res) => {
       <a href="/level/10">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="11">
       <div class="level">Level 11 &mdash; Expert</div>
       <h2>Double Encoding Bypass</h2>
       <p>The server URL-decodes then filters. But decoding happens more than once in the pipeline...</p>
@@ -481,7 +493,7 @@ app.get('/', (req, res) => {
       <a href="/level/11">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="12">
       <div class="level">Level 12 &mdash; Expert</div>
       <h2>Client-Side Template Injection</h2>
       <p>All HTML tags are stripped. But a client-side template engine evaluates {{expressions}}.</p>
@@ -489,7 +501,7 @@ app.get('/', (req, res) => {
       <a href="/level/12">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="13">
       <div class="level">Level 13 &mdash; Expert</div>
       <h2>postMessage XSS</h2>
       <p>No forms, no reflection. The page listens for cross-window messages with no origin check.</p>
@@ -497,7 +509,7 @@ app.get('/', (req, res) => {
       <a href="/level/13">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="14">
       <div class="level">Level 14 &mdash; Expert</div>
       <h2>SVG Upload XSS</h2>
       <p>Upload SVG images that are rendered inline. Script tags are stripped, but SVGs have their own tricks.</p>
@@ -505,7 +517,7 @@ app.get('/', (req, res) => {
       <a href="/level/14">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="15">
       <div class="level">Level 15 &mdash; Expert</div>
       <h2>Mutation XSS</h2>
       <p>A client-side sanitizer strips scripts and event handlers. But the browser's parser may mutate HTML after sanitization.</p>
@@ -513,7 +525,7 @@ app.get('/', (req, res) => {
       <a href="/level/15">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="16">
       <div class="level">Level 16 &mdash; Expert</div>
       <h2>Recursive Keyword Filter</h2>
       <p>The filter loops until nothing changes. Nesting tricks are dead. Think about alternative execution contexts.</p>
@@ -521,7 +533,7 @@ app.get('/', (req, res) => {
       <a href="/level/16">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="17">
       <div class="level">Level 17 &mdash; Expert</div>
       <h2>The Polyglot</h2>
       <p>Your input appears in three contexts at once: HTML body, attribute, and JavaScript string. Find the weakest link.</p>
@@ -529,7 +541,7 @@ app.get('/', (req, res) => {
       <a href="/level/17">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="18">
       <div class="level">Level 18 &mdash; Expert</div>
       <h2>DOM Clobbering</h2>
       <p>Scripts and event handlers are blocked. But the page reads global variables that HTML elements can overwrite.</p>
@@ -537,7 +549,7 @@ app.get('/', (req, res) => {
       <a href="/level/18">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="19">
       <div class="level">Level 19 &mdash; Expert</div>
       <h2>Prototype Pollution &rarr; XSS</h2>
       <p>No HTML injection. Your JSON input is merged into a config object. Pollute the prototype chain to achieve XSS.</p>
@@ -545,7 +557,7 @@ app.get('/', (req, res) => {
       <a href="/level/19">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="20">
       <div class="level">Level 20 &mdash; Expert</div>
       <h2>Base Tag Injection</h2>
       <p>CSP is in place. Scripts and handlers are blocked. But the page loads scripts via relative URLs and you inject before them.</p>
@@ -553,7 +565,7 @@ app.get('/', (req, res) => {
       <a href="/level/20">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="21">
       <div class="level">Level 21 &mdash; Expert</div>
       <h2>Dangling Markup Injection</h2>
       <p>All execution vectors are blocked. But a CSRF token is nearby. Exfiltrate it without executing any JavaScript.</p>
@@ -561,7 +573,7 @@ app.get('/', (req, res) => {
       <a href="/level/21">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="22">
       <div class="level">Level 22 &mdash; Expert</div>
       <h2>JSON Injection in Script Block</h2>
       <p>Your input lands inside a JSON object within a nonced script tag. Angle brackets are escaped. But are quotes?</p>
@@ -569,7 +581,7 @@ app.get('/', (req, res) => {
       <a href="/level/22">Start Challenge</a>
     </div>
 
-    <div class="card diff-expert">
+    <div class="card diff-expert" data-level="23">
       <div class="level">Level 23 &mdash; Expert</div>
       <h2>URL Scheme Bypass</h2>
       <p>Your URL goes into an anchor href. Scripts, handlers, and javascript: are blocked. But the browser decodes HTML entities...</p>
@@ -577,6 +589,22 @@ app.get('/', (req, res) => {
       <a href="/level/23">Start Challenge</a>
     </div>
   </div>
+  <script>
+    fetch('/api/solutions').then(r=>r.json()).then(data=>{
+      const solved=Object.keys(data);
+      solved.forEach(lvl=>{
+        const card=document.querySelector('[data-level="'+lvl+'"]');
+        if(card){
+          card.classList.add('solved');
+          const link=card.querySelector('a');
+          if(link) link.textContent='Completed \\u2713';
+        }
+      });
+      const count=solved.length;
+      document.getElementById('progress-label').textContent=count+' / 23 Completed';
+      document.getElementById('progress-fill').style.width=((count/23)*100)+'%';
+    });
+  </script>
 </body>
 </html>`);
 });
@@ -709,6 +737,17 @@ function levelPage(title, levelNum, difficulty, defenses, hint, bodyContent) {
     <h3>Real-World Application</h3>
     <p id="writeupReal"></p>
   </div>
+  ${solutions[levelNum] && writeups[levelNum] ? `<script>
+    (function(){
+      document.getElementById('successBanner').style.display = 'flex';
+      var w = document.getElementById('writeupSection');
+      w.style.display = 'block';
+      document.getElementById('writeupTitle').innerHTML = ${JSON.stringify(writeups[levelNum].title)};
+      document.getElementById('writeupWhy').innerHTML = ${JSON.stringify(writeups[levelNum].why)};
+      document.getElementById('writeupLesson').innerHTML = ${JSON.stringify(writeups[levelNum].lesson)};
+      document.getElementById('writeupReal').innerHTML = ${JSON.stringify(writeups[levelNum].realWorld)};
+    })();
+  </script>` : ''}
 </body>
 </html>`;
 }
